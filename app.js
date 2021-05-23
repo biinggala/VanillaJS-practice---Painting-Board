@@ -5,8 +5,13 @@ const range = document.getElementById("jsRange");
 const mode = document.getElementById("jsMode");
 const save = document.getElementById("jsSave");
 const reset = document.getElementById("jsReset");
+const undo = document.getElementById("jsUndo");
+const redo = document.getElementById("jsRedo");
 const INITIAL_COLOR = "#2c2c2c";
 const CANVAS_SIZE = 700;
+
+var cPushArray = new Array();
+var cStep = 0;
 
 canvas.width = CANVAS_SIZE;
 canvas.height = CANVAS_SIZE;
@@ -81,9 +86,42 @@ function resetImg() {
   ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 }
 
+function cPush() {
+  cStep++;
+  if (cStep < cPushArray.length) {
+    cPushArray.length = cStep;
+  }
+  cPushArray.push(canvas.toDataURL());
+  console.log(cPushArray);
+}
+
+function cUndo() {
+  if (cStep >= 0) {
+    cStep--;
+    var canvasPic = new Image();
+    canvasPic.src = cPushArray[cStep];
+    canvasPic.onload = function () {
+      ctx.drawImage(canvasPic, 0, 0);
+      console.log(cPushArray);
+    };
+  }
+}
+
+function cRedo() {
+  if (cStep <= cPushArray.length - 1) {
+    cStep++;
+    var canvasPic = new Image();
+    canvasPic.src = cPushArray[cStep];
+    canvasPic.onload = function () {
+      ctx.drawImage(canvasPic, 0, 0);
+    };
+  }
+}
+
 if (canvas) {
   canvas.addEventListener("mousemove", onMouseMove);
   canvas.addEventListener("mousedown", startPainting);
+  canvas.addEventListener("mousedown", cPush);
   canvas.addEventListener("mouseup", stopPainting);
   canvas.addEventListener("mouseleave", stopPainting);
   canvas.addEventListener("mousedown", handleCanvasClick);
@@ -108,4 +146,11 @@ if (save) {
 
 if (reset) {
   reset.addEventListener("click", resetImg);
+}
+
+if (undo) {
+  undo.addEventListener("click", cUndo);
+}
+if (redo) {
+  redo.addEventListener("click", cRedo);
 }

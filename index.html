@@ -8,10 +8,12 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <h1>빙갈라의 그림세상 🎨</h1>
+    <h1 id="jsUser">빙갈라의 그림세상 🎨</h1>
+
     <canvas id="jsCanvas" class="canvas"></canvas>
+
     <div class="controls">
-      <div class="controls__range">
+      <div class="controls__top">
         <input
           type="range"
           id="jsRange"
@@ -20,6 +22,10 @@
           value="2.5"
           step="0.1"
         />
+        <div class="controls__top__tool">
+          <div class="tools" id="jsUndo">undo</div>
+          <div class="tools" id="jsRedo">redo</div>
+        </div>
       </div>
       <div class="controls__btns">
         <button id="jsMode">fill</button><button id="jsReset">reset</button
