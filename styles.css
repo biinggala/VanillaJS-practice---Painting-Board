@@ -71,3 +71,9 @@ h1 {
 .controls .controls__range {
   margin-bottom: 30px;
 }
+
+footer {
+  margin-top: 50px;
+  color: gray;
+  font-size: 12px;
+}
