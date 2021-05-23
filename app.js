@@ -4,6 +4,7 @@ const colors = document.getElementsByClassName("jsColor");
 const range = document.getElementById("jsRange");
 const mode = document.getElementById("jsMode");
 const save = document.getElementById("jsSave");
+const reset = document.getElementById("jsReset");
 const INITIAL_COLOR = "#2c2c2c";
 const CANVAS_SIZE = 700;
 
@@ -68,12 +69,16 @@ function handleCM(event) {
   event.preventDefault();
 }
 
-function saveImg(event) {
+function saveImg() {
   const img = canvas.toDataURL("image/png");
   const link = document.createElement("a");
   link.href = img;
   link.download = "창작교실";
   link.click();
+}
+function resetImg() {
+  ctx.fillStyle = "white";
+  ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 }
 
 if (canvas) {
@@ -99,4 +104,8 @@ if (mode) {
 
 if (save) {
   save.addEventListener("click", saveImg);
+}
+
+if (reset) {
+  reset.addEventListener("click", resetImg);
 }
